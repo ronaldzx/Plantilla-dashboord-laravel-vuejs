@@ -77,3 +77,39 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Npm
+``
+npm install
+``
+## Vuetify
+``
+npm install vuetify
+``
+## vue-router
+``
+npm install vue-router
+``
+## Composer
+``
+composer install
+``
+
+## Run php server
+``
+php artisan serve
+``
+
+## Run npm
+``
+npm run watch
+``
+``
+npm run dev
+``
+``
+npm run prod
+``
+
+## Database mysql
+import script `` /db-plantilla/script.sql `` and change DB_DATABASE property on .env file 

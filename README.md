@@ -112,4 +112,5 @@ npm run prod
 ``
 
 ## Database mysql
-import script `` /db-plantilla/script.sql `` and change DB_DATABASE property on .env file 
+import script `` /db-plantilla/script.sql `` on your db server. Create an .env file and change the properties as you need
+

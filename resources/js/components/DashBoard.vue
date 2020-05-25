@@ -15,7 +15,7 @@
             v-else-if="opcion.hijo"
             :key="opcion.descripcion"
             v-model="opcion.model"
-            :prepend-icon="opcion.model ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+            :prepend-icon="opcion.model ? 'fa-chevron-up' : 'fa-chevron-down'"
             append-icon
           >
             <template v-slot:activator>
@@ -23,7 +23,9 @@
                 <v-list-item-title>{{ opcion.descripcion }}</v-list-item-title>
               </v-list-item-content>
             </template>
-            <v-list-item v-for="(child, i) in opcion.hijo" :key="i" link  :to="child.route">
+            <v-list-item v-for="(child, i) in opcion.hijo" :key="i" link 
+            :to="{name: child.route,
+            params:{padre:opcion.descripcion,hijo:child.descripcion,icono:child.icono}}">
               <v-list-item-action v-if="child.icono">
                 <v-icon>{{ child.icono }}</v-icon>
               </v-list-item-action>
@@ -32,7 +34,8 @@
               </v-list-item-content>
             </v-list-item>
           </v-list-group>
-          <v-list-item v-else :key="opcion.descripcion" link :to="opcion.route">
+          <v-list-item v-else :key="opcion.descripcion" link :to="{name: opcion.route}">
+            <!-- :to="opcion.route"> -->
             <v-list-item-action>
               <v-icon>{{ opcion.icono }}</v-icon>
             </v-list-item-action>
@@ -47,22 +50,11 @@
     <v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app color="blue darken-3" dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title style="width: 300px" class="ml-0 pl-4">
-        <span class="hidden-sm-and-down">Google Contacts</span>
+        <span class="hidden-sm-and-down">Sistema de Gestión de Tickets</span>
       </v-toolbar-title>
-      <v-text-field
-        flat
-        solo-inverted
-        hide-details
-        prepend-inner-icon="mdi-magnify"
-        label="Search"
-        class="hidden-sm-and-down"
-      ></v-text-field>
       <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon>mdi-apps</v-icon>
-      </v-btn>
-      <v-btn icon @click="cerrarSesion()">
-        <v-icon>mdi-bell</v-icon>
+      <v-btn icon @click="cerrarSesion()" alt="Log out">
+        <v-icon>settings_power</v-icon>
       </v-btn>
       <v-btn icon large>
         <v-avatar size="32px" item>
@@ -71,13 +63,7 @@
       </v-btn>
     </v-app-bar>
     <v-content>
-      <v-container class="fill-height" fluid>
-        <v-row align="center" justify="center">
-          <transition name="slide-fade" mode="out-in">
-            <router-view></router-view>
-          </transition>
-        </v-row>
-      </v-container>
+      <router-view></router-view>
     </v-content>
     <v-btn bottom color="pink" dark fab fixed right @click="dialog = !dialog">
       <v-icon>mdi-plus</v-icon>
@@ -170,8 +156,8 @@ export default {
       .get("obtener-menu")
       .then(response => {
         console.log(response);
-        this.menu = response.data;  
-        console.log(this.menu)
+        this.menu = response.data;
+        console.log(this.menu);
       })
       .catch(error => {
         console.log(error);

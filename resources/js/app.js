@@ -29,6 +29,8 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('login-component', require('./components/Login.vue').default);
 Vue.component('dashboard-component', require('./components/DashBoard.vue').default);
 Vue.component('ticketform-component', require('./components/TicketForm.vue').default);
+Vue.component('ticket-validacion-component', require('./components/TicketValidacion.vue').default);
+Vue.component('headerContent-component', require('./components/HeaderContent.vue').default);
 
 
 /**

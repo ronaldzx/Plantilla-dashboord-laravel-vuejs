@@ -35,14 +35,14 @@ class AutenticacionesController extends Controller
         foreach($roles as $index =>$item){
             array_push($rolesId,$item['rol_id']);
         }
-        $opcion = RolOpcion::where('rol_id',[$rolesId])->distinct('opcion_id')->get();    
+        $opcion = RolOpcion::whereIn('rol_id',$rolesId)->distinct('opcion_id')->get();    
         foreach($opcion as $index =>$item){
             array_push($opcionId,$item['opcion_id']);
         }
-        $padre = Opciones::whereIn('id',$opcionId)->where('estado',1)->whereNull('padre_id')->get(); 
+        $padre = Opciones::whereIn('id',$opcionId)->where('estado',1)->whereNull('padre_id')->orderBy('orden')->get(); 
         $opciones = $padre;
         foreach($padre as $index =>$item){
-            $hijo = Opciones::where('padre_id',$item['id'])->where('estado',1)->get();
+            $hijo = Opciones::where('padre_id',$item['id'])->where('estado',1)->orderBy('orden')->get();
             $opciones[$index]['hijo'] = $hijo;            
         }
         // $opciones = Opciones::where('id',[$opcionId])->where('estado',1)->where('padre_id',null)->get();    

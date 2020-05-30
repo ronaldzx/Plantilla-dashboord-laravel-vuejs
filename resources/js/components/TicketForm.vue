@@ -11,6 +11,49 @@
           <template>
             <v-card>
               <v-card-title>
+                <v-dialog v-model="ticket_dialog" persistent max-width="290">
+                  <template v-slot:activator="{ on }">
+                    <v-btn color="primary" dark v-on="on">Nuevo Ticket</v-btn>
+                  </template>
+                  <v-card>
+                    <v-card-title class="headline">Use Google's location service?</v-card-title>
+                    <v-card-text>Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="green darken-1" text @click="ticket_dialog = false">Disagree</v-btn>
+                      <v-btn color="green darken-1" text @click="ticket_dialog = false">Agree</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+                <v-spacer></v-spacer>
+                <v-menu
+                  ref="fecha_ticket"
+                  v-model="fecha_ticket"
+                  :close-on-content-click="false"
+                  transition="scale-transition"
+                  offset-y
+                  max-width="290px"
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on }">
+                    <v-text-field
+                      v-model="dateFormatted"
+                      label="Buscar tickets por fecha"
+                      prepend-icon="event"
+                      @blur="date = parseDate(dateFormatted)"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker
+                    @change="obtenerTickets()"
+                    v-model="date"
+                    no-title
+                    @input="fecha_ticket = false"
+                    locale="es"
+                  ></v-date-picker>
+                </v-menu>
+              </v-card-title>
+              <v-card-title>
                 Lista de tickets
                 <v-spacer></v-spacer>
                 <v-text-field
@@ -21,8 +64,19 @@
                   hide-details
                 ></v-text-field>
               </v-card-title>
-              <v-data-table show-expand :headers="headers" :items="desserts" :search="search">
-
+              <v-data-table
+                :headers="headers"
+                :items="desserts"
+                :search="search"
+                :loading="loading"
+                loading-text="Cargando..."
+                :no-data-text="no_data_text"
+                :no-results-text="no_results_text"
+              >
+                <template v-slot:item.actions="{ item }">
+                  <v-icon small class="mr-2" @click="editItem(item)">fa-clipboard-list</v-icon>
+                  <v-icon small @click="deleteItem(item)">fa-clipboard-list</v-icon>
+                </template>
               </v-data-table>
             </v-card>
           </template>
@@ -32,107 +86,107 @@
   </div>
 </template>
 
+
 <script>
 export default {
-  data () {
-      return {
-        search: '',
-        headers: [
-          {
-            text: 'Dessert (100g serving)',
-            align: 'start',
-            sortable: true,
-            value: 'name',
-          },
-          { text: 'Calories', value: 'calories' },
-          { text: 'Fat (g)', value: 'fat' },
-          { text: 'Carbs (g)', value: 'carbs' },
-          { text: 'Protein (g)', value: 'protein' },
-          { text: 'Iron (%)', value: 'iron' },
-        ],
-        desserts: [
-          {
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-            iron: '1%',
-          },
-          {
-            name: 'Ice cream sandwich',
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-            iron: '1%',
-          },
-          {
-            name: 'Eclair',
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0,
-            iron: '7%',
-          },
-          {
-            name: 'Cupcake',
-            calories: 305,
-            fat: 3.7,
-            carbs: 67,
-            protein: 4.3,
-            iron: '8%',
-          },
-          {
-            name: 'Gingerbread',
-            calories: 356,
-            fat: 16.0,
-            carbs: 49,
-            protein: 3.9,
-            iron: '16%',
-          },
-          {
-            name: 'Jelly bean',
-            calories: 375,
-            fat: 0.0,
-            carbs: 94,
-            protein: 0.0,
-            iron: '0%',
-          },
-          {
-            name: 'Lollipop',
-            calories: 392,
-            fat: 0.2,
-            carbs: 98,
-            protein: 0,
-            iron: '2%',
-          },
-          {
-            name: 'Honeycomb',
-            calories: 408,
-            fat: 3.2,
-            carbs: 87,
-            protein: 6.5,
-            iron: '45%',
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-            iron: '22%',
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-            iron: '6%',
-          },
-        ],
-      }
+  data() {
+    return {
+      no_data_text: "No se encontraron registros",
+      no_results_text: "No se encontraron coincidencias",
+      fecha_ticket: false,
+      date: new Date().toISOString().substr(0, 10),
+      dateFormatted: this.formatDate(new Date().toISOString().substr(0, 10)),
+      ticket_dialog: false,
+      loading: true,
+      search: "",
+      headers: [
+        { text: "Código", value: "codigo", align: "start" },
+        { text: "Conductor", value: "conductor" },
+        { text: "Ruta", value: "unidad_nombre" },
+        { text: "Acciones", value: "actions", sortable: false }
+      ],
+      desserts: []
+    };
+  },
+  watch: {
+    date(val) {
+      this.dateFormatted = this.formatDate(this.date);
+    }
+  },
+  methods: {
+    editItem(item){
+      console.log(item);
     },
+    formatDate(date) {
+      if (!date) return null;
+
+      const [year, month, day] = date.split("-");
+      return `${day}/${month}/${year}`;
+    },
+    parseDate(date) {
+      if (!date) return null;
+
+      const [month, day, year] = date.split("/");
+      return `${year}-${day.padStart(2, "0")}-${month.padStart(2, "0")}`;
+    },
+    obtenerParametros() {},
+    obtenerUnidades() {
+      axios
+        .get("/obtener-unidades")
+        .then(response => {})
+        .catch(error => {});
+    },
+    obtenerConductores() {
+      axios
+        .get("/obtener-conductores")
+        .then(response => {})
+        .catch(error => {});
+    },
+    obtenerRuta() {
+      axios
+        .get("/obtener-rutas")
+        .then(response => {})
+        .catch(error => {});
+    },
+    obtenerTickets() {
+      axios
+        .post("/obtener-tickets", {
+          fecha: this.date
+        })
+        .then(response => {
+          this.desserts = response.data;
+          if (this.desserts) {
+            this.loading = false;
+          }
+        })
+        .catch(error => {});
+    }
+  },
+  created() {
+    axios.interceptors.request.use(
+      config => {
+        this.loading = true;
+        return config;
+      },
+      error => {
+        this.loading = false;
+        return Promise.reject(error);
+      }
+    );
+
+    axios.interceptors.response.use(
+      response => {
+        this.loading = true;
+        return response;
+      },
+      error => {
+        this.loading = false;
+        return Promise.reject(error);
+      }
+    );
+  },
+  mounted() {
+    this.obtenerTickets();
   }
+};
 </script>

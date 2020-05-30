@@ -17,10 +17,13 @@ Route::get('/', function () {
     return view('layouts/app');
 });
 
-Auth::routes();
+// Auth::routes();
 
 Route::post('/iniciar-sesion','AutenticacionesController@iniciarSesion');
 Route::get('/cerrar-sesion','AutenticacionesController@cerrarSesion');
 Route::get('/obtener-menu','AutenticacionesController@obtenerMenu');
+Route::post('/obtener-tickets','TicketController@obtenerTicket');
+
+Route::get('/obtener-unidades','UnidadController@obtenerUnidades');
 
 Route::get('/home', 'HomeController@index')->name('home');

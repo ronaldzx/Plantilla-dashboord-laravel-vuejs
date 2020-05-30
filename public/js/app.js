@@ -2282,12 +2282,8 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get("obtener-menu").then(function (response) {
-      console.log(response);
       _this.menu = response.data;
-      console.log(_this.menu);
-    })["catch"](function (error) {
-      console.log(error);
-    });
+    })["catch"](function (error) {});
   },
   methods: {
     cerrarSesion: function cerrarSesion() {
@@ -2509,6 +2505,73 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2546,100 +2609,107 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      search: '',
+      no_data_text: "No se encontraron registros",
+      no_results_text: "No se encontraron coincidencias",
+      fecha_ticket: false,
+      date: new Date().toISOString().substr(0, 10),
+      dateFormatted: this.formatDate(new Date().toISOString().substr(0, 10)),
+      ticket_dialog: false,
+      loading: true,
+      search: "",
       headers: [{
-        text: 'Dessert (100g serving)',
-        align: 'start',
-        sortable: true,
-        value: 'name'
+        text: "Código",
+        value: "codigo",
+        align: "start"
       }, {
-        text: 'Calories',
-        value: 'calories'
+        text: "Conductor",
+        value: "conductor"
       }, {
-        text: 'Fat (g)',
-        value: 'fat'
+        text: "Ruta",
+        value: "unidad_nombre"
       }, {
-        text: 'Carbs (g)',
-        value: 'carbs'
-      }, {
-        text: 'Protein (g)',
-        value: 'protein'
-      }, {
-        text: 'Iron (%)',
-        value: 'iron'
+        text: "Acciones",
+        value: "actions",
+        sortable: false
       }],
-      desserts: [{
-        name: 'Frozen Yogurt',
-        calories: 159,
-        fat: 6.0,
-        carbs: 24,
-        protein: 4.0,
-        iron: '1%'
-      }, {
-        name: 'Ice cream sandwich',
-        calories: 237,
-        fat: 9.0,
-        carbs: 37,
-        protein: 4.3,
-        iron: '1%'
-      }, {
-        name: 'Eclair',
-        calories: 262,
-        fat: 16.0,
-        carbs: 23,
-        protein: 6.0,
-        iron: '7%'
-      }, {
-        name: 'Cupcake',
-        calories: 305,
-        fat: 3.7,
-        carbs: 67,
-        protein: 4.3,
-        iron: '8%'
-      }, {
-        name: 'Gingerbread',
-        calories: 356,
-        fat: 16.0,
-        carbs: 49,
-        protein: 3.9,
-        iron: '16%'
-      }, {
-        name: 'Jelly bean',
-        calories: 375,
-        fat: 0.0,
-        carbs: 94,
-        protein: 0.0,
-        iron: '0%'
-      }, {
-        name: 'Lollipop',
-        calories: 392,
-        fat: 0.2,
-        carbs: 98,
-        protein: 0,
-        iron: '2%'
-      }, {
-        name: 'Honeycomb',
-        calories: 408,
-        fat: 3.2,
-        carbs: 87,
-        protein: 6.5,
-        iron: '45%'
-      }, {
-        name: 'Donut',
-        calories: 452,
-        fat: 25.0,
-        carbs: 51,
-        protein: 4.9,
-        iron: '22%'
-      }, {
-        name: 'KitKat',
-        calories: 518,
-        fat: 26.0,
-        carbs: 65,
-        protein: 7,
-        iron: '6%'
-      }]
+      desserts: []
     };
+  },
+  watch: {
+    date: function date(val) {
+      this.dateFormatted = this.formatDate(this.date);
+    }
+  },
+  methods: {
+    editItem: function editItem(item) {
+      console.log(item);
+    },
+    formatDate: function formatDate(date) {
+      if (!date) return null;
+
+      var _date$split = date.split("-"),
+          _date$split2 = _slicedToArray(_date$split, 3),
+          year = _date$split2[0],
+          month = _date$split2[1],
+          day = _date$split2[2];
+
+      return "".concat(day, "/").concat(month, "/").concat(year);
+    },
+    parseDate: function parseDate(date) {
+      if (!date) return null;
+
+      var _date$split3 = date.split("/"),
+          _date$split4 = _slicedToArray(_date$split3, 3),
+          month = _date$split4[0],
+          day = _date$split4[1],
+          year = _date$split4[2];
+
+      return "".concat(year, "-").concat(day.padStart(2, "0"), "-").concat(month.padStart(2, "0"));
+    },
+    obtenerParametros: function obtenerParametros() {},
+    obtenerUnidades: function obtenerUnidades() {
+      axios.get("/obtener-unidades").then(function (response) {})["catch"](function (error) {});
+    },
+    obtenerConductores: function obtenerConductores() {
+      axios.get("/obtener-conductores").then(function (response) {})["catch"](function (error) {});
+    },
+    obtenerRuta: function obtenerRuta() {
+      axios.get("/obtener-rutas").then(function (response) {})["catch"](function (error) {});
+    },
+    obtenerTickets: function obtenerTickets() {
+      var _this = this;
+
+      axios.post("/obtener-tickets", {
+        fecha: this.date
+      }).then(function (response) {
+        _this.desserts = response.data;
+
+        if (_this.desserts) {
+          _this.loading = false;
+        }
+      })["catch"](function (error) {});
+    }
+  },
+  created: function created() {
+    var _this2 = this;
+
+    axios.interceptors.request.use(function (config) {
+      _this2.loading = true;
+      return config;
+    }, function (error) {
+      _this2.loading = false;
+      return Promise.reject(error);
+    });
+    axios.interceptors.response.use(function (response) {
+      _this2.loading = true;
+      return response;
+    }, function (error) {
+      _this2.loading = false;
+      return Promise.reject(error);
+    });
+  },
+  mounted: function mounted() {
+    this.obtenerTickets();
   }
 });
 
@@ -46146,6 +46216,192 @@ var render = function() {
                         _c(
                           "v-card-title",
                           [
+                            _c(
+                              "v-dialog",
+                              {
+                                attrs: { persistent: "", "max-width": "290" },
+                                scopedSlots: _vm._u([
+                                  {
+                                    key: "activator",
+                                    fn: function(ref) {
+                                      var on = ref.on
+                                      return [
+                                        _c(
+                                          "v-btn",
+                                          _vm._g(
+                                            {
+                                              attrs: {
+                                                color: "primary",
+                                                dark: ""
+                                              }
+                                            },
+                                            on
+                                          ),
+                                          [_vm._v("Nuevo Ticket")]
+                                        )
+                                      ]
+                                    }
+                                  }
+                                ]),
+                                model: {
+                                  value: _vm.ticket_dialog,
+                                  callback: function($$v) {
+                                    _vm.ticket_dialog = $$v
+                                  },
+                                  expression: "ticket_dialog"
+                                }
+                              },
+                              [
+                                _vm._v(" "),
+                                _c(
+                                  "v-card",
+                                  [
+                                    _c(
+                                      "v-card-title",
+                                      { staticClass: "headline" },
+                                      [_vm._v("Use Google's location service?")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("v-card-text", [
+                                      _vm._v(
+                                        "Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running."
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "v-card-actions",
+                                      [
+                                        _c("v-spacer"),
+                                        _vm._v(" "),
+                                        _c(
+                                          "v-btn",
+                                          {
+                                            attrs: {
+                                              color: "green darken-1",
+                                              text: ""
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                _vm.ticket_dialog = false
+                                              }
+                                            }
+                                          },
+                                          [_vm._v("Disagree")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "v-btn",
+                                          {
+                                            attrs: {
+                                              color: "green darken-1",
+                                              text: ""
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                _vm.ticket_dialog = false
+                                              }
+                                            }
+                                          },
+                                          [_vm._v("Agree")]
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c("v-spacer"),
+                            _vm._v(" "),
+                            _c(
+                              "v-menu",
+                              {
+                                ref: "fecha_ticket",
+                                attrs: {
+                                  "close-on-content-click": false,
+                                  transition: "scale-transition",
+                                  "offset-y": "",
+                                  "max-width": "290px",
+                                  "min-width": "290px"
+                                },
+                                scopedSlots: _vm._u([
+                                  {
+                                    key: "activator",
+                                    fn: function(ref) {
+                                      var on = ref.on
+                                      return [
+                                        _c(
+                                          "v-text-field",
+                                          _vm._g(
+                                            {
+                                              attrs: {
+                                                label:
+                                                  "Buscar tickets por fecha",
+                                                "prepend-icon": "event"
+                                              },
+                                              on: {
+                                                blur: function($event) {
+                                                  _vm.date = _vm.parseDate(
+                                                    _vm.dateFormatted
+                                                  )
+                                                }
+                                              },
+                                              model: {
+                                                value: _vm.dateFormatted,
+                                                callback: function($$v) {
+                                                  _vm.dateFormatted = $$v
+                                                },
+                                                expression: "dateFormatted"
+                                              }
+                                            },
+                                            on
+                                          )
+                                        )
+                                      ]
+                                    }
+                                  }
+                                ]),
+                                model: {
+                                  value: _vm.fecha_ticket,
+                                  callback: function($$v) {
+                                    _vm.fecha_ticket = $$v
+                                  },
+                                  expression: "fecha_ticket"
+                                }
+                              },
+                              [
+                                _vm._v(" "),
+                                _c("v-date-picker", {
+                                  attrs: { "no-title": "", locale: "es" },
+                                  on: {
+                                    change: function($event) {
+                                      return _vm.obtenerTickets()
+                                    },
+                                    input: function($event) {
+                                      _vm.fecha_ticket = false
+                                    }
+                                  },
+                                  model: {
+                                    value: _vm.date,
+                                    callback: function($$v) {
+                                      _vm.date = $$v
+                                    },
+                                    expression: "date"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-card-title",
+                          [
                             _vm._v(
                               "\n              Lista de tickets\n              "
                             ),
@@ -46172,11 +46428,50 @@ var render = function() {
                         _vm._v(" "),
                         _c("v-data-table", {
                           attrs: {
-                            "show-expand": "",
                             headers: _vm.headers,
                             items: _vm.desserts,
-                            search: _vm.search
-                          }
+                            search: _vm.search,
+                            loading: _vm.loading,
+                            "loading-text": "Cargando...",
+                            "no-data-text": _vm.no_data_text,
+                            "no-results-text": _vm.no_results_text
+                          },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "item.actions",
+                              fn: function(ref) {
+                                var item = ref.item
+                                return [
+                                  _c(
+                                    "v-icon",
+                                    {
+                                      staticClass: "mr-2",
+                                      attrs: { small: "" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.editItem(item)
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("fa-clipboard-list")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-icon",
+                                    {
+                                      attrs: { small: "" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.deleteItem(item)
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("fa-clipboard-list")]
+                                  )
+                                ]
+                              }
+                            }
+                          ])
                         })
                       ],
                       1
@@ -103754,10 +104049,15 @@ __webpack_require__.r(__webpack_exports__);
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 /* harmony import */ var _node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vuetify-loader/lib/runtime/installComponents.js */ "./node_modules/vuetify-loader/lib/runtime/installComponents.js");
 /* harmony import */ var _node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuetify/lib/components/VCard */ "./node_modules/vuetify/lib/components/VCard/index.js");
-/* harmony import */ var vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuetify/lib/components/VGrid */ "./node_modules/vuetify/lib/components/VGrid/index.js");
-/* harmony import */ var vuetify_lib_components_VDataTable__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuetify/lib/components/VDataTable */ "./node_modules/vuetify/lib/components/VDataTable/index.js");
-/* harmony import */ var vuetify_lib_components_VTextField__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuetify/lib/components/VTextField */ "./node_modules/vuetify/lib/components/VTextField/index.js");
+/* harmony import */ var vuetify_lib_components_VBtn__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuetify/lib/components/VBtn */ "./node_modules/vuetify/lib/components/VBtn/index.js");
+/* harmony import */ var vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuetify/lib/components/VCard */ "./node_modules/vuetify/lib/components/VCard/index.js");
+/* harmony import */ var vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuetify/lib/components/VGrid */ "./node_modules/vuetify/lib/components/VGrid/index.js");
+/* harmony import */ var vuetify_lib_components_VDataTable__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuetify/lib/components/VDataTable */ "./node_modules/vuetify/lib/components/VDataTable/index.js");
+/* harmony import */ var vuetify_lib_components_VDatePicker__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vuetify/lib/components/VDatePicker */ "./node_modules/vuetify/lib/components/VDatePicker/index.js");
+/* harmony import */ var vuetify_lib_components_VDialog__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vuetify/lib/components/VDialog */ "./node_modules/vuetify/lib/components/VDialog/index.js");
+/* harmony import */ var vuetify_lib_components_VIcon__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vuetify/lib/components/VIcon */ "./node_modules/vuetify/lib/components/VIcon/index.js");
+/* harmony import */ var vuetify_lib_components_VMenu__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vuetify/lib/components/VMenu */ "./node_modules/vuetify/lib/components/VMenu/index.js");
+/* harmony import */ var vuetify_lib_components_VTextField__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vuetify/lib/components/VTextField */ "./node_modules/vuetify/lib/components/VTextField/index.js");
 
 
 
@@ -103786,7 +104086,14 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 
 
-_node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3___default()(component, {VCard: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_4__["VCard"],VCardTitle: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_4__["VCardTitle"],VCol: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_5__["VCol"],VContainer: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_5__["VContainer"],VDataTable: vuetify_lib_components_VDataTable__WEBPACK_IMPORTED_MODULE_6__["VDataTable"],VRow: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_5__["VRow"],VSpacer: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_5__["VSpacer"],VTextField: vuetify_lib_components_VTextField__WEBPACK_IMPORTED_MODULE_7__["VTextField"]})
+
+
+
+
+
+
+
+_node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3___default()(component, {VBtn: vuetify_lib_components_VBtn__WEBPACK_IMPORTED_MODULE_4__["VBtn"],VCard: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCard"],VCardActions: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCardActions"],VCardText: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCardText"],VCardTitle: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCardTitle"],VCol: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VCol"],VContainer: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VContainer"],VDataTable: vuetify_lib_components_VDataTable__WEBPACK_IMPORTED_MODULE_7__["VDataTable"],VDatePicker: vuetify_lib_components_VDatePicker__WEBPACK_IMPORTED_MODULE_8__["VDatePicker"],VDialog: vuetify_lib_components_VDialog__WEBPACK_IMPORTED_MODULE_9__["VDialog"],VIcon: vuetify_lib_components_VIcon__WEBPACK_IMPORTED_MODULE_10__["VIcon"],VMenu: vuetify_lib_components_VMenu__WEBPACK_IMPORTED_MODULE_11__["VMenu"],VRow: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VRow"],VSpacer: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VSpacer"],VTextField: vuetify_lib_components_VTextField__WEBPACK_IMPORTED_MODULE_12__["VTextField"]})
 
 
 /* hot reload */

@@ -155,12 +155,9 @@ export default {
     axios
       .get("obtener-menu")
       .then(response => {
-        console.log(response);
         this.menu = response.data;
-        console.log(this.menu);
       })
       .catch(error => {
-        console.log(error);
       });
   },
   methods: {
